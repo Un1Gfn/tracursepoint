@@ -3,20 +3,23 @@
 // gcc -g -O0 -Wall -Winline $(pkg-config --libs ncurses) player_main.c player.c
 
 #include <ncurses.h>
-#include "player.h"
+#include "08_player.h"
 
 int main(){
 
   initscr();
   noecho();
-  cbreak();
   curs_set(0);
+
+  // cbreak();
+  halfdelay(1);
 
   int yMax=0,xMax=0;
   getmaxyx(stdscr,yMax,xMax);
 
   WINDOW *playwin=newwin(20,50,(yMax/2)-10,10);
-  box(playwin,0,0);
+  // box(playwin,0,0);
+  box(playwin,'.','.');
   refresh();
   wrefresh(playwin);
 
@@ -32,7 +35,14 @@ int main(){
     wrefresh(playwin);
   }while(getmv()!='x');
 
-  getch();
+  // char prev=KEY_RIGHT;
+  // while(1){
+  //   display();
+  //   wrefresh(playwin);
+  //   char =getmv()!='x';
+  // }
+
+  // getch();
   endwin();
 
   return 0;

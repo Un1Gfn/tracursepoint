@@ -2,6 +2,12 @@
 
 #include <ncurses.h>
 
+
+// #define dec(axis) axis=axis<=1 ? 1 : axis-1
+#define dec(axis,max) axis=(axis+max-4)%(max-2)+1;
+
+#define inc(axis,max) axis=(axis)%(max-2)+1;
+
 // private
 int yLoc=0;
 int xLoc=0;
@@ -9,6 +15,7 @@ int yMax=0;
 int xMax=0;
 char character=' ';
 WINDOW *curwin=NULL;
+int prevmv=KEY_RIGHT;
 
 // public
 void initplayer(WINDOW* win,int y,int x,char c){ // Constructor
@@ -21,32 +28,36 @@ void initplayer(WINDOW* win,int y,int x,char c){ // Constructor
 }
 
 void leavetrail(){
-  mvwaddch(curwin,yLoc,xLoc,'.');
+  // mvwaddch(curwin,yLoc,xLoc,'.');
+  mvwaddch(curwin,yLoc,xLoc,' ');
 }
 
 void mvup(){
   leavetrail();
-  yLoc= yLoc<=1 ? 1 : yLoc-1 ;
+  dec(yLoc,yMax);
 }
 
 void mvleft(){
   leavetrail();
-  xLoc= xLoc<=1 ? 1 : xLoc-1 ;
+  dec(xLoc,xMax);
 }
 
 void mvdown(){
   leavetrail();
-  yLoc= yLoc>=yMax-2 ? yMax-2 : yLoc+1 ;
-  // yLoc= yMax-1;
+  inc(yLoc,yMax);
 }
 
 void mvright(){
   leavetrail();
-  xLoc= xLoc>=xMax-2 ? xMax-2 : xLoc+1 ;
+  inc(xLoc,xMax);
 }
 
 int getmv(){ // Return pressed key
   int choice=wgetch(curwin);
+  if(choice==ERR)
+    choice=prevmv;
+  else
+    prevmv=choice;
   switch(choice){
     case KEY_UP:
       mvup();
