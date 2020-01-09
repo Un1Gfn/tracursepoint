@@ -1,5 +1,7 @@
 https://github.com/Un1Gfn/tracursepoint
 
+Screenshot https://github.com/Un1Gfn/tracursepoint/blob/master/src/screenshot.png
+
 Trackpoint
 https://askubuntu.com/questions/37824/what-is-the-best-way-to-configure-a-thinkpads-trackpoint/553926
 https://wiki.archlinux.org/index.php/TrackPoint#GUI_configuration
