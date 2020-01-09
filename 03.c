@@ -1,4 +1,4 @@
-// gcc -g -O0 -Wall -Winline $(pkg-config --libs ncurses) ncurses_casualcoder_03_04.c
+// 03.c
 
 #include <ncurses.h>
 

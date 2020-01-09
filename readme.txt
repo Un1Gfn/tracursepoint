@@ -30,3 +30,11 @@ http://tldp.org/HOWTO/NCURSES-Programming-HOWTO/
 Reference manual
 /usr/share/man/
 https://invisible-island.net/ncurses/man/
+
+key=stdscr
+for i in $(pacman -Qql ncurses|grep man); do
+  zgrep $key $i &>/dev/null
+  if [ $? -eq 0 ]; then
+    echo $i
+  fi
+done

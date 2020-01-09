@@ -1,11 +1,19 @@
-// gcc -g -O0 -Wall -Winline $(pkg-config --libs ncurses) ncurses_casualcoder_04.c
+// 04.c
 
 #include <ncurses.h>
 
+void start_ncurses(bool useRaw,bool useNoecho){
+  initscr();
+  // cbreak(); // ?
+  if(useRaw)
+    raw();
+  if(useNoecho)
+    noecho();
+}
+
 int main(){
 
-  // start_ncurses(1,1);
-  initscr();
+  start_ncurses(1,1);
 
   if(!has_colors()){
     printw("Terminal does not support color");

@@ -1,4 +1,4 @@
-// reset; gcc -g -O0 -Wall -Winline $(pkg-config --libs ncurses) ncurses_main.c
+// 01_02.c
 
 #include <ncurses.h>
 
