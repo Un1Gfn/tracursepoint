@@ -16,7 +16,8 @@ int main(){
   noecho();
   curs_set(0);
   keypad(stdscr,1);
-  mousemask(BUTTON1_PRESSED,NULL);
+  // mousemask(0,NULL);
+  // mousemask(BUTTON1_CLICKED,NULL);
   mousemask(BUTTON1_PRESSED,NULL);
 
   int yM0=0;
@@ -47,36 +48,26 @@ int main(){
       MEVENT event={};
       if(getmouse(&event)!=OK)
         ERR2;
-      // printw("%d (%d, %d, %d) %X\n",
-      //   event.id,
-      //   event.y,
-      //   event.x,
-      //   event.z,
-      //   event.bstate
-      // );
       if(wenclose(win_sensitivity,event.y,event.x)){
-        // printw("O ");
-        int yRel=event.y;
-        int xRel=event.x;
-        if(!wmouse_trafo(win_sensitivity,&yRel,&xRel,FALSE))
+        // printw("%d ",event.x);
+        if(!wmouse_trafo(win_sensitivity,&event.y,&event.x,FALSE))
           ERR2;
-        if(validxpos(xRel))
-          printw("O ");
-        else
-          printw("X ");
+        // printw("%d ",event.x);
+        if(validxpos(event.x))
+          slider_update(win_sensitivity,event.x);
         continue;
       }
-      printw("- ");
-      // if(wenclose(win_speed,event.y,event.x)){
-      //   attron(A_REVERSE);
-      //   printw("O ");
-      //   attroff(A_REVERSE);
-      //   // mouse_trafo
-      // }
+      if(wenclose(win_speed,event.y,event.x)){
+        // printw("%d ",event.x);
+        if(!wmouse_trafo(win_speed,&event.y,&event.x,FALSE))
+          ERR2;
+        // printw("%d ",event.x);
+        if(validxpos(event.x))
+          slider_update(win_speed,event.x);
+        continue;
+      }
     }
   }
-
-
 
   // getch();
   delwin(win_sensitivity);

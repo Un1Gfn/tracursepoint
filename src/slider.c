@@ -52,6 +52,6 @@ void slider_update(WINDOW *slider,int pos_new){
   // Erase previous handle
   mvwaddch(slider,2,x-1,SLGROOVE);
   // Place new handle
-  place_handle(slider,pos_new+1);
+  place_handle(slider,pos_new);
   wrefresh(slider);
 }
