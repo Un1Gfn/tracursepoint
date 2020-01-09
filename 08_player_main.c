@@ -13,6 +13,8 @@ int main(){
 
   // cbreak();
   halfdelay(1);
+  // timeout(500);
+  // timeout(-1);
 
   int yMax=0,xMax=0;
   getmaxyx(stdscr,yMax,xMax);
