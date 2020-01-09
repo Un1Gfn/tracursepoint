@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# ┌────────────────────────────────────────────┐
+# │                                            │
+# │ ---------------------\033[7m \033[0m------ │
+# │                                            │
+# └────────────────────────────────────────────┘
+
+# Font: Monospace Regular 5
+
+reset
+
+echo -n '┌'
+for i in $(seq 1 258); do
+  echo -n '─'
+done
+echo '┐'
+
+
+echo -n '│'
+for i in $(seq 1 258); do
+  echo -n ' '
+done
+echo '│'
+
+echo -n '│ '
+for i in $(seq 0 199); do
+  echo -n '-'
+done
+echo -ne '\033[7m \033[0m'
+for i in $(seq 201 255); do
+  echo -n '-'
+done
+echo ' │'
+
+echo -n '│'
+for i in $(seq 1 258); do
+  echo -n ' '
+done
+echo '│'
+
+echo -n '└'
+for i in $(seq 1 258); do
+  echo -n '─'
+done
+echo '┘'
+
+read -r
