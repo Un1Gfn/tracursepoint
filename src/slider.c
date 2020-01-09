@@ -8,8 +8,8 @@ bool validval(int val){
   return 0<=val && val<=RANGE ;
 }
 
-bool validpos(int pos){
-  return 2<=pos && pos<=RANGE+2 ;
+bool validxpos(int xpos){
+  return 2<=xpos && xpos<=RANGE+2 ;
 }
 
 int to_pos(int val){
@@ -19,13 +19,13 @@ int to_pos(int val){
 }
 
 int to_val(int pos){
-  if(!validpos(pos))
+  if(!validxpos(pos))
     ERR2;
   return pos-2;
 }
 
 void place_handle(WINDOW *slider,int pos_new){
-  if(!validpos(pos_new))
+  if(!validxpos(pos_new))
     ERR2;
   wattron(slider,A_REVERSE);
   mvwaddch(slider,2,pos_new,SLHANDLE);
@@ -33,7 +33,7 @@ void place_handle(WINDOW *slider,int pos_new){
 }
 
 void slider_init(WINDOW *slider,int pos_initial){
-  if(!validpos(pos_initial))
+  if(!validxpos(pos_initial))
     ERR2;
   box(slider,0,0);
   wmove(slider,2,2);
@@ -45,7 +45,7 @@ void slider_init(WINDOW *slider,int pos_initial){
 }
 
 void slider_update(WINDOW *slider,int pos_new){
-  if(!validpos(pos_new))
+  if(!validxpos(pos_new))
     ERR2;
   int y=0,x=0;
   getyx(slider,y,x);

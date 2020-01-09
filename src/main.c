@@ -17,6 +17,7 @@ int main(){
   curs_set(0);
   keypad(stdscr,1);
   mousemask(BUTTON1_PRESSED,NULL);
+  mousemask(BUTTON1_PRESSED,NULL);
 
   int yM0=0;
   int xM0=0;
@@ -24,15 +25,18 @@ int main(){
   const int xM=xM0;
   const int yM=yM0;
 
-  // WINDOW *win_sensitivity=newwin(5,RANGE+1+2+2,(yM-5)/2,(xM-RANGE-5)/2);
   WINDOW *win_sensitivity=newwin(HEIGHT,WIDTH,  (yM-2*HEIGHT)/3       ,(xM-WIDTH)/2);
   WINDOW *win_speed      =newwin(HEIGHT,WIDTH,2*(yM-2*HEIGHT)/3+HEIGHT,(xM-WIDTH)/2);
-  slider_init(win_sensitivity,to_pos(get_sensitivity()));
-  slider_init(win_speed,to_pos(get_speed()));
+
+  // slider_init(win_sensitivity,to_pos(get_sensitivity()));
+  // slider_init(win_speed,to_pos(get_speed()));
+
+  slider_init(win_sensitivity,to_pos(27));
+  slider_init(win_speed,to_pos(54));
 
   // getch();
-  // slider_update(win_sensitivity,valto_pos(27));
-  // slider_update(win_speed,valto_pos(54));
+  // slider_update(win_sensitivity,to_pos(27));
+  // slider_update(win_speed,to_pos(54));
 
   while(1){
     int ch=getch();
@@ -51,13 +55,24 @@ int main(){
       //   event.bstate
       // );
       if(wenclose(win_sensitivity,event.y,event.x)){
-        printw("O ");
+        // printw("O ");
+        int yRel=event.y;
+        int xRel=event.x;
+        if(!wmouse_trafo(win_sensitivity,&yRel,&xRel,FALSE))
+          ERR2;
+        if(validxpos(xRel))
+          printw("O ");
+        else
+          printw("X ");
+        continue;
       }
-      if(wenclose(win_speed,event.y,event.x)){
-        attron(A_REVERSE);
-        printw("O ");
-        attroff(A_REVERSE);
-      }
+      printw("- ");
+      // if(wenclose(win_speed,event.y,event.x)){
+      //   attron(A_REVERSE);
+      //   printw("O ");
+      //   attroff(A_REVERSE);
+      //   // mouse_trafo
+      // }
     }
   }
 
