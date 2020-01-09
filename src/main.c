@@ -29,21 +29,32 @@ int main(){
   WINDOW *win_sensitivity=newwin(HEIGHT,WIDTH,  (yM-2*HEIGHT)/3       ,(xM-WIDTH)/2);
   WINDOW *win_speed      =newwin(HEIGHT,WIDTH,2*(yM-2*HEIGHT)/3+HEIGHT,(xM-WIDTH)/2);
 
-  // slider_init(win_sensitivity,to_pos(get_sensitivity()));
-  // slider_init(win_speed,to_pos(get_speed()));
-
-  slider_init(win_sensitivity,to_pos(27));
-  slider_init(win_speed,to_pos(54));
+  // slider_init(win_sensitivity,to_xpos(27));
+  // slider_init(win_speed,to_xpos(54));
+  slider_init(win_sensitivity,to_xpos(get_sensitivity()));
+  slider_init(win_speed,to_xpos(get_speed()));
 
   // getch();
-  // slider_update(win_sensitivity,to_pos(27));
-  // slider_update(win_speed,to_pos(54));
+  // slider_update(win_sensitivity,to_xpos(27));
+  // slider_update(win_speed,to_xpos(54));
 
   while(1){
     int ch=getch();
     // printw("%X\n",ch);
     if(ch=='x')
       break;
+    // if(ch==KEY_F5){
+    //   printw("F5 ");
+    //   // slider_update(win_sensitivity,to_xpos(get_sensitivity()));
+    //   // slider_update(win_speed,to_xpos(get_speed()));
+    // }
+    if(ch=='r'){ // Reset to defaults
+      set_sensitivity(DEFAULT_SENSITIVITY);
+      set_speed(DEFAULT_SPEED);
+      slider_update(win_sensitivity,to_xpos(DEFAULT_SENSITIVITY));
+      slider_update(win_speed,to_xpos(DEFAULT_SPEED));
+      continue;
+    }
     if(ch==KEY_MOUSE){
       MEVENT event={};
       if(getmouse(&event)!=OK)

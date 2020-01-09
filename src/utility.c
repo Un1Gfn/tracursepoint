@@ -1,17 +1,20 @@
 // utility.c
 
+// #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-// #include <errno.h>
 #include "errors.h"
+#include "slider.h"
+#include "utility.h"
 
-// /sys/devices/platform/i8042/serio1/sensitivity
-// /sys/devices/platform/i8042/serio1/speed
+bool valid(int s){
+  return 0<=s && s<=RANGE ;
+}
 
 // [0, 255] default 200
 int get_sensitivity(){
   FILE *pFile;  
-  if (!(pFile=fopen ("/sys/devices/platform/i8042/serio1/sensitivity","r")))
+  if (!(pFile=fopen("/sys/devices/platform/i8042/serio1/sensitivity","r")))
     ERR2;
   int ret=0;
   fscanf(pFile,"%d",&ret);
@@ -22,13 +25,34 @@ int get_sensitivity(){
 // [0, 255] default 97
 int get_speed(){
   FILE *pFile;
-  if (!(pFile=fopen ("/sys/devices/platform/i8042/serio1/speed","r")))
+  if (!(pFile=fopen("/sys/devices/platform/i8042/serio1/speed","r")))
     ERR2;
   int ret=0;
   fscanf(pFile,"%d",&ret);
   fclose(pFile);
   return ret;
 }
+
+void set_sensitivity(int s){
+  if(!valid(s))
+    ERR2;
+  FILE *pFile;  
+  if (!(pFile=fopen("/sys/devices/platform/i8042/serio1/sensitivity","w")))
+    ERR2;
+  fprintf(pFile,"%d\n",s);
+  fclose(pFile);
+}
+
+void set_speed(int s){
+  if(!valid(s))
+    ERR2;
+  FILE *pFile;  
+  if (!(pFile=fopen("/sys/devices/platform/i8042/serio1/speed","w")))
+    ERR2;
+  fprintf(pFile,"%d\n",s);
+  fclose(pFile);
+}
+
 
 // // return ferror() value
 // // int set_sensitivity(int s){

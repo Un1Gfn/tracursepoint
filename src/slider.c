@@ -12,7 +12,7 @@ bool validxpos(int xpos){
   return 2<=xpos && xpos<=RANGE+2 ;
 }
 
-int to_pos(int val){
+int to_xpos(int val){
   if(!validval(val))
     ERR2;
   return val+2;
