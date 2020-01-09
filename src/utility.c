@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 // #include <errno.h>
+#include "errors.h"
 
 // /sys/devices/platform/i8042/serio1/sensitivity
 // /sys/devices/platform/i8042/serio1/speed
@@ -11,7 +12,7 @@
 int get_sensitivity(){
   FILE *pFile;  
   if (!(pFile=fopen ("/sys/devices/platform/i8042/serio1/sensitivity","r")))
-    exit(1);
+    ERR2;
   int ret=0;
   fscanf(pFile,"%d",&ret);
   fclose(pFile);
@@ -22,7 +23,7 @@ int get_sensitivity(){
 int get_speed(){
   FILE *pFile;
   if (!(pFile=fopen ("/sys/devices/platform/i8042/serio1/speed","r")))
-    exit(1);
+    ERR2;
   int ret=0;
   fscanf(pFile,"%d",&ret);
   fclose(pFile);
@@ -34,7 +35,7 @@ int get_speed(){
 // void set_sensitivity(int s){
 //   FILE *pFile;  
 //   if (!(pFile=fopen ("/sys/devices/platform/i8042/serio1/sensitivity","w")))
-//     exit(1);
+//     ERR2;
 
 //   // bash: echo: write error: Numerical result out of range
 //   // bash: echo: write error: Invalid argument
@@ -65,7 +66,7 @@ int get_speed(){
 // void set_speed(int s){
 //   FILE *pFile;  
 //   if (!(pFile=fopen ("/sys/devices/platform/i8042/serio1/speed","w")))
-//     exit(1);
+//     ERR2;
 //   fclose(pFile);
 // }
 

@@ -9,7 +9,10 @@
 #define SLGROOVE '-'
 #define SLHANDLE ' ' // Space in reverse color
 
-void slider_init(WINDOW *slider,int initial);
-void slider_update(WINDOW *slider,int new);
+int to_pos(int val);
+int to_val(int pos);
+
+void slider_init(WINDOW *slider,int val_initial);
+void slider_update(WINDOW *slider,int val_new);
 
 #endif

@@ -1,7 +1,7 @@
 #include <ncurses.h>
 #include <stdlib.h>
 
-#define ERR2 {endwin();printf("ERR2 %s %d\n",__FILE__,__LINE__);exit(1);}
+#define ERR22 {endwin();printf("ERR22 %s %d\n",__FILE__,__LINE__);exit(1);}
 
 int main(){
 
@@ -26,14 +26,15 @@ int main(){
   printw("%X\n\n",KEY_MOUSE);
 
   while(1){
-    int ch=wgetch(stdscr);
+    // int ch=wgetch(stdscr);
+    int ch=getch();
     // printw("%X\n",ch);
     if(ch=='x')
       break;
     if(ch==KEY_MOUSE){
       MEVENT event={};
       if(getmouse(&event)!=OK)
-        ERR2;
+        ERR22;
       printw("%d (%d, %d, %d) %X\n",
         event.id,
         event.y,
