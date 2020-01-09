@@ -12,7 +12,6 @@
 bool validval(int val);
 bool validxpos(int ypos);
 
-
 int to_xpos(int val);
 int to_val(int pos);
 

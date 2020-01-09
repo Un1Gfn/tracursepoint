@@ -7,8 +7,6 @@
 #include "slider.h"
 #include "errors.h"
 
-// const int sensitivity=55;
-
 int main(){
 
   initscr();
@@ -29,18 +27,11 @@ int main(){
   WINDOW *win_sensitivity=newwin(HEIGHT,WIDTH,  (yM-2*HEIGHT)/3       ,(xM-WIDTH)/2);
   WINDOW *win_speed      =newwin(HEIGHT,WIDTH,2*(yM-2*HEIGHT)/3+HEIGHT,(xM-WIDTH)/2);
 
-  // slider_init(win_sensitivity,to_xpos(27));
-  // slider_init(win_speed,to_xpos(54));
   slider_init(win_sensitivity,to_xpos(get_sensitivity()));
   slider_init(win_speed,to_xpos(get_speed()));
 
-  // getch();
-  // slider_update(win_sensitivity,to_xpos(27));
-  // slider_update(win_speed,to_xpos(54));
-
   while(1){
     int ch=getch();
-    // printw("%X\n",ch);
     if(ch=='x'||ch=='q')
       break;
     if(ch=='r'){ // Reset to defaults
@@ -63,15 +54,19 @@ int main(){
       if(wenclose(win_sensitivity,event.y,event.x)){
         if(!wmouse_trafo(win_sensitivity,&event.y,&event.x,FALSE))
           ERR2;
-        if(validxpos(event.x))
+        if(validxpos(event.x)){
+          set_sensitivity(to_val(event.x));
           slider_update(win_sensitivity,event.x);
+        }
         continue;
       }
       if(wenclose(win_speed,event.y,event.x)){
         if(!wmouse_trafo(win_speed,&event.y,&event.x,FALSE))
           ERR2;
-        if(validxpos(event.x))
+        if(validxpos(event.x)){
+          set_speed(to_val(event.x));
           slider_update(win_speed,event.x);
+        }
         continue;
       }
     }
