@@ -27,8 +27,8 @@ int main(){
   WINDOW *win_sensitivity=newwin(HEIGHT,WIDTH,  (yM-2*HEIGHT)/3       ,(xM-WIDTH)/2);
   WINDOW *win_speed      =newwin(HEIGHT,WIDTH,2*(yM-2*HEIGHT)/3+HEIGHT,(xM-WIDTH)/2);
 
-  slider_init(win_sensitivity,to_xpos(get_sensitivity()));
-  slider_init(win_speed,to_xpos(get_speed()));
+  slider_init(win_sensitivity,to_xpos(get_sensitivity())/*,'O'*/);
+  slider_init(win_speed,to_xpos(get_speed())/*,'+'*/);
 
   while(1){
     int ch=getch();

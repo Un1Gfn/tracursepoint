@@ -32,10 +32,21 @@ void place_handle(WINDOW *slider,int pos_new){
   wattroff(slider,A_REVERSE);
 }
 
-void slider_init(WINDOW *slider,int pos_initial){
+void slider_init(WINDOW *slider,int pos_initial/*,char legend*/){
   if(!validxpos(pos_initial))
     ERR2;
   box(slider,0,0);
+
+  // Add legend to the left of the slider
+  // int ybeg=0;
+  // int xend=0;
+  // getbegyx(slider,ybeg,xend);
+  // for(int y=ybeg;y!=ybeg+HEIGHT;++y){
+  //   for(int x=xend;x!=xend-HEIGHT;--x)
+  //     mvaddch(y,x,legend);
+  // }
+  // refresh();
+
   wmove(slider,2,2);
   for(int i=0;i<=RANGE;++i)
     waddch(slider,SLGROOVE);

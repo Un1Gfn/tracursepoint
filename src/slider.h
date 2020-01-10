@@ -15,7 +15,7 @@ bool validxpos(int ypos);
 int to_xpos(int val);
 int to_val(int pos);
 
-void slider_init(WINDOW *slider,int val_initial);
+void slider_init(WINDOW *slider,int val_initial/*,char legend*/);
 void slider_update(WINDOW *slider,int val_new);
 
 #endif
