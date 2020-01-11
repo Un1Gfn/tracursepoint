@@ -9,7 +9,7 @@ int main(){
 
   open_accel();
 
-  get_accel();
+  printf("%f\n",get_accel());
 
   close_accel();
 

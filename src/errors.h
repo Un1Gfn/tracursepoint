@@ -1,5 +1,5 @@
-#ifndef ERR2ORS_H
-#define ERR2ORS_H
+#ifndef ERRORS_H
+#define ERRORS_H
 
 #include <stdlib.h>
 #include <ncurses.h>

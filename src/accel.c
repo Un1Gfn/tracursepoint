@@ -1,12 +1,13 @@
 // x.c
 
 #include <X11/extensions/XInput.h>
+#include <X11/Xatom.h>
 #include <stdio.h>
 #include <string.h>
 #include "errors.h"
 // #include "accel.h"
 
-#define NAMEARRSZ 100
+#define SOMESIZE 100
 
 // XListDeviceProperties (3)
 // -> /usr/share/man/man3/XListInputDevices.3.gz
@@ -63,33 +64,77 @@ void close_accel(){
 
 float get_accel(){
 
-  int nprops=0;
-  Atom* atoms=XListDeviceProperties(display,trackpoint,&nprops);
-
-  // No memry error
+  // int nprops=0;
+  // Atom *atoms=XListDeviceProperties(display,trackpoint,&nprops);
   // for(int i=0;i<nprops;++i){
   //   char *name=XGetAtomName(display,atoms[i]);
   //   printf("%4lu %s\n",atoms[i],name);
   //   XFree(name);
   // }
 
-  // char **names=NULL;
-  // char names[NAMEARRSZ][NAMEARRSZ]={};
-  // char *names=calloc(NAMEARRSZ*NAMEARRSZ,sizeof(char));
-  char *names[NAMEARRSZ]={};
-  XGetAtomNames(display,atoms,nprops,&names);
+  // char **names=calloc(SOMESIZE,sizeof(char *));
+  // XGetAtomNames(display,atoms,nprops,names);
+  // Atom property=0;
   // for(int i=0;i<nprops;++i){
-    // printf("%4lu %s\n",atoms[i],names[i]);
-    // XFree(names[i]);
-    // names[i]=NULL;
+  //   if(strcmp(names[i],"libinput Accel Speed")==0)
+  //     property=atoms[i];
+  //   // printf("%4lu %s\n",atoms[i],names[i]);
+  //   XFree(names[i]);
+  //   names[i]=NULL;
   // }
-  // XFree(names);
+  // free(names);
   // names=NULL;
+  // XFree(atoms);
+  // atoms=NULL;
 
-  // XListDeviceProperties(3):
-  // The client is expected to free the list of properties using XFree
-  XFree(atoms);
+  // "libinput Accel Speed" (305)
+  const Atom property=XInternAtom(display,"libinput Accel Speed",True);
+  // printf("%lu\n",property);
 
-  return 0;
+  // https://www.x.org/releases/current/doc/libX11/libX11/libX11.html#Properties_and_Atoms
+  // printf("%lu %s\n",XA_INTEGER,XGetAtomName(display,XA_INTEGER));
+  Atom actual_type_return=0;
+  int actual_format_return=0;
+  unsigned long nitems_return=0;
+  unsigned long bytes_after_return=0;
+  // unsigned char *prop_return=calloc(SOMESIZE,sizeof(unsigned char));
+  unsigned char *prop_return=NULL;
+  // printf("%p\n",prop_return);
+  // Defined in /usr/include/X11/Xatom.h
+  // Atom req_type=XA_INTEGER;
+  const long offset=0;
+  const long length=1; // 1 x 32 = 32 bits
+  Atom req_type=AnyPropertyType;
+  XGetDeviceProperty(
+    display,
+    trackpoint,
+    property,
+    offset,
+    length,
+    False, // not deleted
+    req_type,
+    &actual_type_return,
+    &actual_format_return,
+    &nitems_return,
+    &bytes_after_return,
+    &prop_return
+  );
+
+  // printf("%p\n",prop_return);
+  // printf("%zu(x8) %zu(x8) - %ld(x32) %ld(x32) - %s %d(x1) %lu %lu(x8) \n",
+  //   sizeof(float),
+  //   sizeof(double),
+  //   offset,
+  //   length,
+  //   XGetAtomName(display,actual_type_return),
+  //   actual_format_return,
+  //   nitems_return,
+  //   bytes_after_return,
+  // );
+
+  float ret=*((float *)prop_return);
+  free(prop_return);
+  prop_return=NULL;
+  return ret;
 
 }
