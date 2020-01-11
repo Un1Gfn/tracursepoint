@@ -6,6 +6,8 @@
 #include "errors.h"
 // #include "accel.h"
 
+#define NAMEARRSZ 100
+
 // XListDeviceProperties (3)
 // -> /usr/share/man/man3/XListInputDevices.3.gz
 // -> libxi
@@ -30,6 +32,7 @@ int getdeviceid(const char* str){
 
   // const size_t qsz=strlen(xdeviceinfos[i].name)+3;
   // char quoted[qsz];
+  // // https://stackoverflow.com/a/3082971/8243991
   // memset(quoted,'\0',qsz*sizeof(char));
   // quoted[0]='\'';
   // strcat(quoted,xdeviceinfos[i].name);
@@ -60,10 +63,32 @@ void close_accel(){
 
 float get_accel(){
 
-  // int nprops=0;
-  // Atom* atom=XListDeviceProperties(display,trackpoint,&nprops);
-  // for(int i=0;i<nprops;++i)
-  //   printf("%lu\n",atom[i]);
+  int nprops=0;
+  Atom* atoms=XListDeviceProperties(display,trackpoint,&nprops);
+
+  // No memry error
+  // for(int i=0;i<nprops;++i){
+  //   char *name=XGetAtomName(display,atoms[i]);
+  //   printf("%4lu %s\n",atoms[i],name);
+  //   XFree(name);
+  // }
+
+  // char **names=NULL;
+  // char names[NAMEARRSZ][NAMEARRSZ]={};
+  // char *names=calloc(NAMEARRSZ*NAMEARRSZ,sizeof(char));
+  char *names[NAMEARRSZ]={};
+  XGetAtomNames(display,atoms,nprops,&names);
+  // for(int i=0;i<nprops;++i){
+    // printf("%4lu %s\n",atoms[i],names[i]);
+    // XFree(names[i]);
+    // names[i]=NULL;
+  // }
+  // XFree(names);
+  // names=NULL;
+
+  // XListDeviceProperties(3):
+  // The client is expected to free the list of properties using XFree
+  XFree(atoms);
 
   return 0;
 
