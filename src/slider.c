@@ -24,7 +24,7 @@ int to_val(int pos){
   return pos-2;
 }
 
-void place_handle(WINDOW *slider,int pos_new){
+static void place_handle(WINDOW *slider,int pos_new){
   if(!validxpos(pos_new))
     ERR2;
   wattron(slider,A_REVERSE);

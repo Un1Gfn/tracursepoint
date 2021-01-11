@@ -7,7 +7,7 @@
 #include "slider.h"
 #include "utility.h"
 
-bool valid(int s){
+static bool valid(int s){
   return 0<=s && s<=RANGE ;
 }
 

@@ -40,3 +40,8 @@ for i in $(pacman -Qql ncurses|grep man); do
     echo $i
   fi
 done
+
+Square font
+In VT, setfont /usr/share/kbd/consolefonts/*8x8*.gz
+
+square.ttf http://strlen.com/square/
